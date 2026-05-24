@@ -7,7 +7,7 @@ import picocli.CommandLine;
 import java.util.concurrent.Callable;
 import java.util.prefs.Preferences;
 
-@CommandLine.Command (name = "signer", description = "Sign a document")
+@CommandLine.Command (name = "sign", description = "Sign a document")
 public class SignCommand implements Callable<Integer> {
     @CommandLine.Option(names = {"-p", "--pkcs11"}, description = "PKCS#11 module path")
     private String pkcs11;

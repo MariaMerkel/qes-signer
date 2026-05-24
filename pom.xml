@@ -40,6 +40,74 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>generateManPages</id>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeProjectDependencies>true</includeProjectDependencies>
+                    <includePluginDependencies>true</includePluginDependencies>
+                    <mainClass>picocli.codegen.docgen.manpage.ManPageGenerator</mainClass>
+                    <arguments>
+                        <argument>--outdir=${project.build.directory}/generated-picocli-docs</argument>
+                        <argument>-v</argument>
+                        <!-- FIXME: remove the template-dir option after generating templates once -->
+                        <argument>--template-dir=src/docs/mantemplates</argument>
+                        <argument>dev.maria.qessigner.commands.SignCommand</argument>
+                        <argument>dev.maria.qessigner.commands.SetDefaultsCommand</argument>
+                        <argument>dev.maria.qessigner.commands.ResetDefaultsCommand</argument>
+                    </arguments>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>info.picocli</groupId>
+                        <artifactId>picocli-codegen</artifactId>
+                        <version>4.7.7</version>
+                        <type>jar</type>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>2.1.0</version>
+                <executions>
+                    <execution>
+                        <id>output-html</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <backend>html5</backend>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>output-manpage</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <sourceHighlighter>coderay</sourceHighlighter>
+                            <backend>manpage</backend>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDirectory>${project.build.directory}/generated-picocli-docs</sourceDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
