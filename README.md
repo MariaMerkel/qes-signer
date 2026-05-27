@@ -5,6 +5,8 @@ It requires the signing certificate to be installed on a token with a PKCS#11 dr
 
 If a timestamping server is specified, signatures are created to the PAdES-LTA standard for long-time archival capabilities. If no timestamping server is specified, signatures are created to the PAdES-B standard.
 
+The installers are built using a free license kindly provided by the [multi-platform installer builder install4j](https://www.ej-technologies.com/install4j).
+
 ## Signing Files
 
 To sign a document, use the following command:
